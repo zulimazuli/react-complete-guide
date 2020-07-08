@@ -9,9 +9,17 @@ const cockpit = (props) => {
         setTimeout(() => {
             alert('Done!');
         }, 1000)
-    }, []); //[element-to-follow], [] = only once
+        return () => {
+            console.log('[Cocpit.js] cleanup work, on dismount')
+        }
+    }, []); // e.g. [element-to-follow], [] = only once, nothing = every update
 
-    //useEffect();
+    useEffect(() => {
+        console.log('[Cockpit.js] 2nd useEffect');
+        return () => {
+            console.log('[Cocpit.js] cleanup work, on 2nd dismount')
+        }
+    });
 
     let assignedClasses = [];
     let btnClass = '';
@@ -20,11 +28,11 @@ const cockpit = (props) => {
         btnClass = classes.Red;
     }
 
-    if (props.persons.length <= 2) {
+    if (props.personsLength <= 2) {
         assignedClasses.push(classes.red);
     }
 
-    if (props.persons.length <= 1) {
+    if (props.personsLength <= 1) {
         assignedClasses.push(classes.bold);
     }
 
@@ -39,4 +47,4 @@ const cockpit = (props) => {
         </div>);
 };
 
-export default cockpit;
+export default React.memo(cockpit);
